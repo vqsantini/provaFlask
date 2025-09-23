@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Reservas{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold text-indigo-600 mb-4">Reservas</h2>
+<div class="bg-white rounded shadow overflow-hidden">
+<table class="min-w-full divide-y divide-gray-200">
+  <thead class="bg-gray-50">
+    <tr>
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cliente</th>
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pacote</th>
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantidade</th>
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y divide-gray-200">
+    {% for r in reservas %}
+    <tr>
+      <td class="px-6 py-4 whitespace-nowrap">{{ r.cliente_nome }}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{ r.pacote_id and (r.pacote_id | string) or '' }}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{ r.quantidade }}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{ r.data_reserva.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{ r.status }}</td>
+      <td class="px-6 py-4 whitespace-nowrap">
+        {% if r.status != 'cancelada' %}
+        <form method="POST" action="{{ url_for('cancelar_reserva', id=r.id) }}" onsubmit="return confirm('Cancelar reserva?');">
+          <button type="submit" class="text-red-600">Cancelar</button>
+        </form>
+        {% else %}
+        <span class="text-gray-500">—</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
