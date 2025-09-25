@@ -16,6 +16,7 @@
   </thead>
   <tbody class="bg-white divide-y divide-gray-200">
     {% for r in reservas %}
+    {% if r.status != 'cancelada' %}
     <tr>
       <td class="px-6 py-4 whitespace-nowrap">{{ r.cliente_nome }}</td>
       <td class="px-6 py-4 whitespace-nowrap">{{ r.pacote_id and (r.pacote_id | string) or '' }}</td>
@@ -23,13 +24,10 @@
       <td class="px-6 py-4 whitespace-nowrap">{{ r.data_reserva.strftime('%Y-%m-%d %H:%M') }}</td>
       <td class="px-6 py-4 whitespace-nowrap">{{ r.status }}</td>
       <td class="px-6 py-4 whitespace-nowrap">
-        {% if r.status != 'cancelada' %}
         <form method="POST" action="{{ url_for('cancelar_reserva', id=r.id) }}" onsubmit="return confirm('Cancelar reserva?');">
           <button type="submit" class="text-red-600">Cancelar</button>
         </form>
-        {% else %}
-        <span class="text-gray-500">—</span>
-        {% endif %}
+      {% endif %}
       </td>
     </tr>
     {% endfor %}

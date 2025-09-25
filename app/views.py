@@ -139,6 +139,9 @@ def nova_reserva(pacote_id):
             usuario_id=current_user.id,
             quantidade=int(form.quantidade.data)
         )
+        if form.quantidade.data < p.vagas_min:
+            flash(f"Atenção: A quantidade é menor que o mínimo de {p.vagas_min} vagas para este pacote.", "warning")
+            return redirect(url_for("nova_reserva", pacote_id=pacote_id))
         p.vagas_disponiveis -= int(form.quantidade.data)
         db.session.add(r)
         db.session.commit()
