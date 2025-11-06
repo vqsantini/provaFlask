@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.12.5 on win32)" generated="2025-11-06T12:36:02.248803" rpa="false" schemaversion="5">
+<suite id="s1" name="Test Api Reservas" source="C:\Users\victor_santini\Desktop\code\provaFlask\app\tests\api\test_api_reservas.robot">
+<kw name="Create Session" owner="RequestsLibrary" type="SETUP">
+<msg time="2025-11-06T12:36:02.491712" level="INFO">Creating Session using : alias=api, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>http://127.0.0.1:5000</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-11-06T12:36:02.491712" elapsed="0.000000"/>
+</kw>
+<test id="s1-t1" name="Deve Efetuar Login Com Sucesso" line="11">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-11-06T12:36:02.492719" level="INFO">${body} = {'email': 'admin@gmail.com', 'senha': '123456'}</msg>
+<var>${body}</var>
+<arg>email=admin@gmail.com</arg>
+<arg>senha=123456</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.491712" elapsed="0.001007"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-11-06T12:36:02.496712" level="INFO">POST Request : url=http://127.0.0.1:5000/api/login 
+ path_url=/api/login 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '47', 'Content-Type': 'application/json'} 
+ body=b'{"email": "admin@gmail.com", "senha": "123456"}' 
+ </msg>
+<msg time="2025-11-06T12:36:02.496712" level="INFO">POST Response : url=http://127.0.0.1:5000/api/login 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.5', 'Date': 'Thu, 06 Nov 2025 15:36:02 GMT', 'Content-Type': 'application/json', 'Content-Length': '43', 'Connection': 'close'} 
+ body={
+  "message": "Login feito com sucesso"
+}
+ 
+ </msg>
+<msg time="2025-11-06T12:36:02.496712" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>api</arg>
+<arg>${LOGIN_ENDPOINT}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.492719" elapsed="0.003993"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-11-06T12:36:02.496712" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.496712" elapsed="0.001001"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Login bem-sucedido na API</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.497713" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-11-06T12:36:02.491712" elapsed="0.006001"/>
+</test>
+<test id="s1-t2" name="Listar Reservas (GET)" line="17">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-11-06T12:36:02.504712" level="INFO">GET Request : url=http://127.0.0.1:5000/api/reservas 
+ path_url=/api/reservas 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-11-06T12:36:02.504712" level="INFO">GET Response : url=http://127.0.0.1:5000/api/reservas 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.5', 'Date': 'Thu, 06 Nov 2025 15:36:02 GMT', 'Content-Type': 'application/json', 'Content-Length': '2207', 'Connection': 'close'} 
+ body=[
+  {
+    "cliente_nome": "VICTOR SANTINI",
+    "data_reserva": "2025-09-22 21:39",
+    "id": 1,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "ASSOCIA\u00c7\u00c3O DOS BANANICULTORES DE GUARAMIRIM",
+    "data_reserva": "2025-09-22 21:40",
+    "id": 2,
+    "pacote_id": 1,
+    "quantidade": 1,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "atendente",
+    "data_reserva": "2025-09-22 21:41",
+    "id": 3,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 13:00",
+    "id": 4,
+    "pacote_id": 1,
+    "quantidade": 1,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 13:32",
+    "id": 5,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 13:48",
+    "id": 6,
+    "pacote_id": 1,
+    "quantidade": 1,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 13:50",
+    "id": 7,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 13:57",
+    "id": 8,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 14:19",
+    "id": 9,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Vitor Albuquerque",
+    "data_reserva": "2025-09-25 14:28",
+    "id": 10,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "ativa"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 14:29",
+    "id": 11,
+    "pacote_id": 2,
+    "quantidade": 6,
+    "status": "ativa"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 14:39",
+    "id": 12,
+    "pacote_id": 1,
+    "quantidade": 2,
+    "status": "cancelada"
+  },
+  {
+    "cliente_nome": "Victor Santini",
+    "data_reserva": "2025-09-25 14:39",
+    "id": 13,
+    "pacote_id": 2,
+    "quantidade": 1,
+    "status": "cancelada"
+  }
+]
+ 
+ </msg>
+<msg time="2025-11-06T12:36:02.504712" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>api</arg>
+<arg>${RESERVAS_ENDPOINT}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.498713" elapsed="0.005999"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-11-06T12:36:02.505712" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.504712" elapsed="0.001000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Reservas listadas com sucesso</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.505712" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-11-06T12:36:02.498713" elapsed="0.006999"/>
+</test>
+<test id="s1-t3" name="Criar Reserva (POST)" line="22">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-11-06T12:36:02.507793" level="INFO">${body} = {'cliente_nome': 'Teste Robot', 'cliente_email': 'teste@robot.com', 'cliente_telefone': '9999-9999', 'pacote_id': '1', 'quantidade': '1'}</msg>
+<var>${body}</var>
+<arg>cliente_nome=Teste Robot</arg>
+<arg>cliente_email=teste@robot.com</arg>
+<arg>cliente_telefone=9999-9999</arg>
+<arg>pacote_id=1</arg>
+<arg>quantidade=1</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.506789" elapsed="0.001004"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-11-06T12:36:02.513857" level="INFO">POST Request : url=http://127.0.0.1:5000/api/reservas 
+ path_url=/api/reservas 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '137', 'Content-Type': 'application/json'} 
+ body=b'{"cliente_nome": "Teste Robot", "cliente_email": "teste@robot.com", "cliente_telefone": "9999-9999", "pacote_id": "1", "quantidade": "1"}' 
+ </msg>
+<msg time="2025-11-06T12:36:02.513857" level="INFO">POST Response : url=http://127.0.0.1:5000/api/reservas 
+ status=500, reason=INTERNAL SERVER ERROR 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.5', 'Date': 'Thu, 06 Nov 2025 15:36:02 GMT', 'Content-Type': 'application/json', 'Content-Length': '72', 'Connection': 'close'} 
+ body={
+  "error": "'&gt;' not supported between instances of 'str' and 'int'"
+}
+ 
+ </msg>
+<msg time="2025-11-06T12:36:02.513857" level="FAIL">HTTPError: 500 Server Error: INTERNAL SERVER ERROR for url: http://127.0.0.1:5000/api/reservas</msg>
+<var>${response}</var>
+<arg>api</arg>
+<arg>${RESERVAS_ENDPOINT}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2025-11-06T12:36:02.507793" elapsed="0.007332">HTTPError: 500 Server Error: INTERNAL SERVER ERROR for url: http://127.0.0.1:5000/api/reservas</status>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Url: ${response.url}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2025-11-06T12:36:02.515125" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-11-06T12:36:02.515125" elapsed="0.000000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Reserva criada com sucesso</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2025-11-06T12:36:02.515125" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-11-06T12:36:02.506789" elapsed="0.008336">HTTPError: 500 Server Error: INTERNAL SERVER ERROR for url: http://127.0.0.1:5000/api/reservas</status>
+</test>
+<test id="s1-t4" name="Cancelar Reserva (POST)" line="34">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-11-06T12:36:02.520128" level="INFO">POST Request : url=http://127.0.0.1:5000/api/reservas/1/cancelar 
+ path_url=/api/reservas/1/cancelar 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-11-06T12:36:02.520128" level="INFO">POST Response : url=http://127.0.0.1:5000/api/reservas/1/cancelar 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/3.1.3 Python/3.12.5', 'Date': 'Thu, 06 Nov 2025 15:36:02 GMT', 'Content-Type': 'application/json', 'Content-Length': '45', 'Connection': 'close'} 
+ body={
+  "message": "Reserva j\u00e1 cancelada"
+}
+ 
+ </msg>
+<msg time="2025-11-06T12:36:02.520128" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>api</arg>
+<arg>${RESERVAS_ENDPOINT}/1/cancelar</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.516131" elapsed="0.003997"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-11-06T12:36:02.520128" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.520128" elapsed="0.000000"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Reserva cancelada com sucesso</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-06T12:36:02.520128" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-11-06T12:36:02.516131" elapsed="0.003997"/>
+</test>
+<status status="FAIL" start="2025-11-06T12:36:02.248803" elapsed="0.272519"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test Api Reservas" id="s1" pass="3" fail="1" skip="0">Test Api Reservas</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
